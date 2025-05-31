@@ -1,0 +1,41 @@
+/* src/components/ItemList.css */
+
+.itemList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.itemCard {
+  width: 200px;
+  border: 1px solid #000000;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.itemCard:hover {
+  transform: scale(1.03);
+}
+
+.itemCard__img {
+  width: 100%;
+  height: auto;
+}
+
+.itemCard__title {
+  font-size: 1rem;
+  margin: 0.5rem;
+}
+
+.itemCard__price {
+  font-size: 1.1rem;
+  margin: 0.5rem;
+  color: #333;
+}
+
+.itemLink {
+  text-decoration: none;
+  color: inherit;
+}

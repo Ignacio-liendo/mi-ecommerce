@@ -1,14 +1,12 @@
+// src/components/CartWidget.jsx
 import React from 'react';
 
-const CartWidget = () => {
+function CartWidget() {
   return (
-    <button type="button" className="btn btn-outline-primary position-relative">
-      🛒
-      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-        3
-      </span>
-    </button>
+    <div style={{ color: 'white' }}>
+      🛒<span className="cart-count">0</span>
+    </div>
   );
-};
+}
 
 export default CartWidget;

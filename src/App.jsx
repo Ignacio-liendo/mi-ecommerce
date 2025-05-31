@@ -1,22 +1,33 @@
-import './App.css';
-import NavBar from './components/navbar';
-import ItemListContainer from "./components/ItemListContainer";
-import ItemDetailContainer from './components/itemdetailcontainer';
-import NotFound from './components/notfound';
+// src/App.jsx
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import ItemListContainer from './components/ItemListContainer';
+import ItemDetailContainer from './components/ItemDetailContainer';
+import NotFound from './components/NotFound';
+import './App.css'; // estilos globales de App si tuvieras
 
 function App() {
   return (
-    <>
-      <NavBar />
-      <Routes>
-        <Route path="*" element={<h2 style={{textAlign: "center"}}>Página no encontrada</h2>} />
-        <Route path="/" element={<ItemListContainer />} />
-        <Route path="/category/:categoryId" element={<ItemListContainer />} />
-        <Route path="/item/:itemId" element={<ItemDetailContainer />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
+    <div className="App">
+      <Navbar />
+
+      <main>
+        <Routes>
+          {/* Ruta principal: catálogo completo */}
+          <Route path="/" element={<ItemListContainer />} />
+
+          {/* Ruta por categoría */}
+          <Route path="/category/:categoryId" element={<ItemListContainer />} />
+
+          {/* Ruta detalle de producto */}
+          <Route path="/item/:itemId" element={<ItemDetailContainer />} />
+
+          {/* Ruta 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
 

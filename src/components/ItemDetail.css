@@ -1,0 +1,32 @@
+/* src/components/ItemDetail.css */
+
+.itemDetail {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.itemDetail__imgContainer {
+  max-width: 300px;
+}
+
+.itemDetail__img {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+.itemDetail__info {
+  max-width: 400px;
+}
+
+.itemDetail__price {
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+.itemDetail__desc {
+  margin: 1rem 0;
+  font-size: 1rem;
+}

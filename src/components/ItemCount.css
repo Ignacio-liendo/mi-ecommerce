@@ -1,0 +1,96 @@
+/* src/components/itemcount.css */
+
+.itemCount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.itemCount__controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.itemCount__btn {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+}
+
+.itemCount__btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.itemCount__qty {
+  font-size: 1.1rem;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.itemCount__addButton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+}
+
+.itemCount__addButton:hover {
+  background-color: #218838;
+}
+/* src/components/itemcount.css */
+
+.itemCount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.itemCount__controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.itemCount__btn {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+}
+
+.itemCount__btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.itemCount__qty {
+  font-size: 1.1rem;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.itemCount__addButton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+}
+
+.itemCount__addButton:hover {
+  background-color: #218838;
+}

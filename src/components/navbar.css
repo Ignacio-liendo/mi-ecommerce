@@ -1,24 +1,48 @@
+/* Navbar.css */
+
+/* 1) Que ocupe siempre todo el ancho: */
 .navbar {
-  background-color: #1e1e1e;
-  color: white;
-  padding: 10px 20px;
+  width: 100%;            /* fuerza la barra a 100% del contenedor padre */
+  background-color: #222;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0.5rem 1rem;    /* ajustes de espacio interno */
+  box-sizing: border-box;  /* importante para que el padding no aumente el ancho más allá del 100% */
 }
 
-.nav-left a {
-  color: #4f7df9;
-  margin-right: 15px;
+
+.navbar {
+  margin: 0;             
+}
+
+.navbar__logo h2 {
+  color: white;
+  margin: 0;
+}
+
+.navbar__list {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;      /* elimina márgenes implícitos */
+  padding: 0;     /* elimina padding implícito */
+}
+
+.navbar__item .navlink {
+  color: white;
   text-decoration: none;
   font-weight: 500;
 }
 
-.nav-left a:hover {
+.navbar__item .navlink:hover {
   text-decoration: underline;
 }
 
-.nav-right {
-  display: flex;
-  align-items: center;
+.navbar__item .active {
+  border-bottom: 2px solid #ff6600;
+}
+
+.navbar__cart {
+  /* Aquí va el CartWidget, sin margen extra. */
 }
