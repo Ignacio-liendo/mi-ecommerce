@@ -1,33 +1,29 @@
-// src/App.jsx
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext'; // Asegúrate de esta ruta
+import NavBar from './components/Navbar'; // Nombre del archivo Navbar
 import ItemListContainer from './components/ItemListContainer';
 import ItemDetailContainer from './components/ItemDetailContainer';
-import NotFound from './components/NotFound';
-import './App.css'; // estilos globales de App si tuvieras
+import Cart from './components/Cart'; // Nuevo componente
+import Checkout from './components/Checkout'; // Nuevo componente
+import NotFound from './components/NotFound'; // Ya lo tienes
+import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-
-      <main>
+    <BrowserRouter>
+      <CartProvider>
+        <NavBar />
         <Routes>
-          {/* Ruta principal: catálogo completo */}
-          <Route path="/" element={<ItemListContainer />} />
-
-          {/* Ruta por categoría */}
-          <Route path="/category/:categoryId" element={<ItemListContainer />} />
-
-          {/* Ruta detalle de producto */}
+          <Route path="/" element={<ItemListContainer greeting="¡Bienvenido a nuestra tienda!" />} />
+          <Route path="/category/:categoryId" element={<ItemListContainer greeting="Productos por Categoría" />} />
           <Route path="/item/:itemId" element={<ItemDetailContainer />} />
-
-          {/* Ruta 404 */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="*" element={<NotFound />} /> {/* Ruta para 404 */}
         </Routes>
-      </main>
-    </div>
+      </CartProvider>
+    </BrowserRouter>
   );
 }
 

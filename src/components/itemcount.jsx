@@ -1,38 +1,42 @@
-// src/components/ItemCount.jsx
-import React, { useState } from 'react';
-import './itemcount.css';
+import React, { useState, useEffect } from 'react';
+import './ItemCount.css'; // Asegúrate de que este archivo CSS exista
 
-function ItemCount({ stock, initial, onAdd }) {
-  const [cantidad, setCantidad] = useState(initial);
+const ItemCount = ({ stock, initial, onAdd }) => {
+  const [quantity, setQuantity] = useState(initial);
 
-  const handleSumar = () => {
-    if (cantidad < stock) {
-      setCantidad((prev) => prev + 1);
+  useEffect(() => {
+    setQuantity(initial);
+  }, [initial]);
+
+  const increment = () => {
+    if (quantity < stock) {
+      setQuantity(quantity + 1);
     }
   };
 
-  const handleRestar = () => {
-    if (cantidad > 1) {
-      setCantidad((prev) => prev - 1);
+  const decrement = () => {
+    if (quantity > 1) { // Mínimo 1 unidad
+      setQuantity(quantity - 1);
     }
-  };
-
-  const handleAgregar = () => {
-    onAdd(cantidad);
   };
 
   return (
-    <div className="itemCount">
-      <div className="itemCount__controls">
-        <button onClick={handleRestar} className="itemCount__btn">−</button>
-        <span className="itemCount__qty">{cantidad}</span>
-        <button onClick={handleSumar} className="itemCount__btn">+</button>
+    <div className="item-count">
+      <div className="controls">
+        <button onClick={decrement}>-</button>
+        <span className="quantity">{quantity}</span>
+        <button onClick={increment}>+</button>
       </div>
-      <button onClick={handleAgregar} className="itemCount__addButton">
-        Agregar al carrito
+      <button
+        onClick={() => onAdd(quantity)}
+        disabled={stock === 0}
+        className="add-to-cart-button"
+      >
+        Agregar al Carrito
       </button>
+      {stock === 0 && <p className="stock-message">No hay stock disponible</p>}
     </div>
   );
-}
+};
 
 export default ItemCount;

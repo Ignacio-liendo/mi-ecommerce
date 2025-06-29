@@ -1,13 +1,9 @@
-/* src/components/ItemListContainer.css */
-
-.itemListContainer {
-  padding: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
+.item-list-container {
+  padding: 20px;
+  text-align: center;
 }
 
-.itemListContainer p {
-  font-size: 1.2rem;
+.item-list-container h2 {
+  color: #333;
+  margin-bottom: 20px;
 }

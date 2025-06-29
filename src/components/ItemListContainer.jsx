@@ -1,58 +1,48 @@
-// src/components/ItemListContainer.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ItemList from './ItemList';
-import { getProducts, getProductsByCategory } from '../services/products';
-import './ItemListContainer.css';
+import ItemList from './ItemList'; // Asegúrate de la ruta correcta
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../firebase/config'; // Asegúrate de la ruta correcta
+import './ItemListContainer.css'; // Asegúrate de que este archivo CSS exista
 
-function ItemListContainer() {
-  const { categoryId } = useParams();
-  const [productos, setProductos] = useState([]);
+const ItemListContainer = ({ greeting }) => {
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { categoryId } = useParams();
 
   useEffect(() => {
     setLoading(true);
+    const productsRef = collection(db, 'products'); // 'products' es el nombre de tu colección en Firestore
 
-    // Si no hay categoryId o es 'all', traemos todos los productos
-    if (!categoryId || categoryId === 'all') {
-      getProducts()
-        .then((res) => {
-          setProductos(res);
-        })
-        .catch((err) => {
-          console.error('Error trayendo productos:', err);
-          setProductos([]);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } else {
-      // Si hay categoryId, filtrar
-      getProductsByCategory(categoryId)
-        .then((res) => {
-          setProductos(res);
-        })
-        .catch((err) => {
-          console.error('Error trayendo categoría:', err);
-          setProductos([]);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
+    const q = categoryId
+      ? query(productsRef, where('category', '==', categoryId))
+      : productsRef;
+
+    getDocs(q)
+      .then(snapshot => {
+        const productsDB = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setProducts(productsDB);
+      })
+      .catch(error => {
+        console.error("Error fetching products:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [categoryId]);
 
   return (
-    <div className="itemListContainer">
+    <div className="item-list-container">
+      <h2>{greeting} {categoryId ? `: ${categoryId.toUpperCase()}` : ''}</h2>
       {loading ? (
-        <p>Cargando productos...</p>
-      ) : productos.length > 0 ? (
-        <ItemList productos={productos} />
+        <p>Cargando productos...</p> // Puedes reemplazar esto con un loader más sofisticado
+      ) : products.length > 0 ? (
+        <ItemList products={products} />
       ) : (
-        <p>No hay productos para mostrar.</p>
+        <p>No se encontraron productos en esta categoría.</p>
       )}
     </div>
   );
-}
+};
 
 export default ItemListContainer;

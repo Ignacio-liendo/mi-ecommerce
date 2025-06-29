@@ -1,0 +1,21 @@
+.cart-widget {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: white;
+  text-decoration: none;
+}
+
+.cart-icon {
+  width: 30px; /* Ajusta según el tamaño de tu icono */
+  height: 30px;
+  filter: invert(100%); /* Si tu icono es negro, lo hace blanco */
+}
+
+.cart-count {
+  background-color: #dc3545;
+  border-radius: 50%;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
