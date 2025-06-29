@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ItemCount from './ItemCount';
-import { useCart } from '../context/CartContext'; // Asegúrate de la ruta correcta
+import { useCart } from './context/CartContext'; // Asegúrate de la ruta correcta
 import './ItemDetail.css'; // Asegúrate de que este archivo CSS exista
 
 const ItemDetail = ({ item }) => {

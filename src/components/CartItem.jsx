@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCart } from '../context/CartContext';
+import { useCart } from './context/CartContext';
 import './CartItem.css'; // Crea este archivo CSS
 
 const CartItem = ({ id, name, price, quantity, image }) => {

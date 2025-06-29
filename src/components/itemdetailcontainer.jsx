@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ItemDetail from './ItemDetail'; // Asegúrate de la ruta correcta
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase/config'; // Asegúrate de la ruta correcta
+import { db } from './firebase/config'; // Asegúrate de la ruta correcta
 import './ItemDetailContainer.css'; // Asegúrate de que este archivo CSS exista
 
 const ItemDetailContainer = () => {

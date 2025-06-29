@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { CartProvider } from './context/CartContext'; // Asegúrate de esta ruta
+import { CartProvider } from './components/context/CartContext'; // Asegúrate de esta ruta
 import NavBar from './components/Navbar'; // Nombre del archivo Navbar
 import ItemListContainer from './components/ItemListContainer';
 import ItemDetailContainer from './components/ItemDetailContainer';

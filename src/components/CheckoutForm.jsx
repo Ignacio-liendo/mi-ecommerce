@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useCart } from '../context/CartContext';
-import { db } from '../firebase/config';
+import { useCart } from './context/CartContext';
+import { db } from './firebase/config';
 import { collection, addDoc, Timestamp, writeBatch, getDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './CheckoutForm.css'; // Crea este archivo CSS
