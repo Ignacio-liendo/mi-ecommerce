@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useCart } from './context/CartContext'; // Asegúrate de la ruta correcta
-import './CartWidget.css'; // Asegúrate de que este archivo CSS exista
+import { useCart } from '../context/CartContext'; // <<-- RUTA CORREGIDA AQUÍ
+import './CartWidget.css';
 
 const CartWidget = () => {
   const { totalQuantity } = useCart();

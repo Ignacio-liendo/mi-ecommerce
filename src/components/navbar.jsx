@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import CartWidget from './CartWidget'; // Asegúrate de la ruta correcta
-import './Navbar.css'; // Asegúrate de que este archivo CSS exista
+import CartWidget from './CartWidget';
+import './Navbar.css';
 
 const NavBar = () => {
   return (

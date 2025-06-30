@@ -1,18 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './ItemList.css';
-import Item from './Item'; // Asegúrate de que este Item.jsx exista y sea el que esperas. Si no, quita esta línea.
 
-
-// <<-- ¡¡CORREGIDO AQUÍ!!: 'productos' cambió a 'products'
-function ItemList({ products }) { 
+function ItemList({ products }) { // <<-- PROP 'products' CORREGIDA AQUÍ
   return (
     <div className="itemList">
-      {products.map((prod) => ( // <<-- Aquí ahora usa 'products'
+      {products.map((prod) => (
         <div key={prod.id} className="itemCard">
           <Link to={`/item/${prod.id}`} className="itemLink">
             <img
-              src={prod.image} // <<-- ¡¡CORREGIDO AQUÍ!!: 'prod.img' cambió a 'prod.image'
+              src={prod.image} // <<-- CAMPO 'image' CORREGIDO AQUÍ
               alt={prod.name}
               className="itemCard__img"
             />

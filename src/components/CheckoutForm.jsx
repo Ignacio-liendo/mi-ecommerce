@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useCart } from './context/CartContext';
-import { db } from './firebase/config';
+import { useCart } from '../context/CartContext'; // <<-- CORREGIDO: Ruta ajustada
+import { db } from '../firebase/config'; // <<-- CORREGIDO: Ruta ajustada
 import { collection, addDoc, Timestamp, writeBatch, getDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './CheckoutForm.css'; // Crea este archivo CSS
@@ -16,12 +16,14 @@ const CheckoutForm = () => {
     confirmEmail: ''
   });
   const [emailError, setEmailError] = useState(false);
+  const [displayMessage, setDisplayMessage] = useState(''); // Nuevo estado para mensajes al usuario
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (e.target.name === 'confirmEmail' || e.target.name === 'email') {
       setEmailError(false); // Resetea el error al escribir
+      setDisplayMessage(''); // Limpia el mensaje de error al cambiar el email
     }
   };
 
@@ -29,12 +31,22 @@ const CheckoutForm = () => {
     e.preventDefault();
     setLoading(true);
     setOrderId(''); // Resetea cualquier ID de orden previo
+    setDisplayMessage(''); // Limpia mensajes anteriores
 
     if (formData.email !== formData.confirmEmail) {
       setEmailError(true);
+      setDisplayMessage('Los emails no coinciden. Por favor, verifícalos.');
       setLoading(false);
       return;
     }
+    
+    // Si el carrito está vacío, no se puede finalizar la compra
+    if (cart.length === 0) {
+      setDisplayMessage('Tu carrito está vacío. Agrega productos para continuar.');
+      setLoading(false);
+      return;
+    }
+
 
     const order = {
       buyer: {
@@ -55,31 +67,49 @@ const CheckoutForm = () => {
     const batch = writeBatch(db);
     const outOfStock = [];
 
+    // Verificación de stock y preparación del batch
     for (const cartItem of cart) {
       const docRef = doc(db, 'products', cartItem.id);
-      const docSnap = await getDoc(docRef);
+      try {
+        const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists() && docSnap.data().stock >= cartItem.quantity) {
-        batch.update(docRef, { stock: docSnap.data().stock - cartItem.quantity });
-      } else {
-        outOfStock.push({ id: cartItem.id, name: cartItem.name });
+        if (docSnap.exists()) {
+          const productData = docSnap.data();
+          if (productData.stock >= cartItem.quantity) {
+            batch.update(docRef, { stock: productData.stock - cartItem.quantity });
+          } else {
+            outOfStock.push({ id: cartItem.id, name: cartItem.name, availableStock: productData.stock });
+          }
+        } else {
+          // Producto no encontrado en la base de datos
+          outOfStock.push({ id: cartItem.id, name: cartItem.name, availableStock: 0, notFound: true });
+        }
+      } catch (error) {
+        console.error("Error al verificar stock para:", cartItem.name, error);
+        outOfStock.push({ id: cartItem.id, name: cartItem.name, error: true });
       }
     }
 
     if (outOfStock.length === 0) {
       try {
-        await batch.commit(); // Actualiza el stock
+        await batch.commit(); // Actualiza el stock en la base de datos
         const docRef = await addDoc(collection(db, 'orders'), order); // Crea la orden
         setOrderId(docRef.id);
-        clearCart();
+        clearCart(); // Vacía el carrito después de una compra exitosa
       } catch (error) {
-        console.error("Error al procesar la compra:", error);
-        alert("Hubo un error al procesar tu compra. Por favor, inténtalo de nuevo.");
+        console.error("Error al procesar la compra o guardar la orden:", error);
+        setDisplayMessage("Hubo un error al procesar tu compra. Por favor, inténtalo de nuevo.");
       } finally {
         setLoading(false);
       }
     } else {
-      alert(`Los siguientes productos no tienen suficiente stock: ${outOfStock.map(item => item.name).join(', ')}. Por favor, ajusta tu carrito.`);
+      // Manejo de productos sin stock
+      const stockMessages = outOfStock.map(item => {
+        if (item.notFound) return `${item.name} (ya no disponible)`;
+        if (item.error) return `${item.name} (error al verificar stock)`;
+        return `${item.name} (stock disponible: ${item.availableStock || 0})`;
+      }).join(', ');
+      setDisplayMessage(`Algunos productos no tienen suficiente stock: ${stockMessages}. Por favor, ajusta tu carrito.`);
       setLoading(false);
     }
   };
@@ -102,6 +132,7 @@ const CheckoutForm = () => {
   return (
     <form onSubmit={handleSubmit} className="checkout-form">
       <h3>Datos de Contacto</h3>
+      {displayMessage && <p className="error-message">{displayMessage}</p>} {/* Muestra el mensaje aquí */}
       <div className="form-group">
         <label htmlFor="name">Nombre:</label>
         <input

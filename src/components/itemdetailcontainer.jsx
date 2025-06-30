@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ItemDetail from './ItemDetail'; // Asegúrate de la ruta correcta
+import ItemDetail from './ItemDetail';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from './firebase/config'; // Asegúrate de la ruta correcta
-import './ItemDetailContainer.css'; // Asegúrate de que este archivo CSS exista
+import { db } from '../firebase/config'; // <<-- RUTA CORREGIDA AQUÍ
+import './ItemDetailContainer.css';
 
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState(null);
@@ -12,14 +12,14 @@ const ItemDetailContainer = () => {
 
   useEffect(() => {
     setLoading(true);
-    const docRef = doc(db, 'products', itemId); // 'products' y 'itemId'
+    const docRef = doc(db, 'products', itemId);
     getDoc(docRef)
       .then(snapshot => {
         if (snapshot.exists()) {
           setProduct({ id: snapshot.id, ...snapshot.data() });
         } else {
           console.log("No such document!");
-          setProduct(null); // Producto no encontrado
+          setProduct(null);
         }
       })
       .catch(error => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCart } from './context/CartContext';
+import { useCart } from '../context/CartContext'; // <<-- CORREGIDO: Ruta ajustada
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem'; // Nuevo componente
 import './Cart.css'; // Crea este archivo CSS

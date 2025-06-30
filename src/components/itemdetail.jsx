@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ItemCount from './ItemCount';
-import { useCart } from './context/CartContext'; // Asegúrate de la ruta correcta
-import './ItemDetail.css'; // Asegúrate de que este archivo CSS exista
+import { useCart } from '../context/CartContext'; // <<-- RUTA CORREGIDA AQUÍ
+import './ItemDetail.css';
 
 const ItemDetail = ({ item }) => {
   const [quantityAdded, setQuantityAdded] = useState(0);
-  const { addItem, isInCart } = useCart();
+  const { addItem, isInCart, cart } = useCart(); // Agregado 'cart' para acceder a la cantidad existente
 
   const handleOnAdd = (quantity) => {
     setQuantityAdded(quantity);
@@ -30,7 +30,12 @@ const ItemDetail = ({ item }) => {
                 <Link to="/" className="keep-shopping-button">Seguir Comprando</Link>
               </div>
             ) : (
-              <ItemCount stock={item.stock} initial={isInCart(item.id) ? item.quantity : 1} onAdd={handleOnAdd} />
+              // Inicializa ItemCount con la cantidad actual si el producto ya está en el carrito
+              <ItemCount 
+                stock={item.stock} 
+                initial={isInCart(item.id) ? (cart.find(cartItem => cartItem.id === item.id)?.quantity || 1) : 1} 
+                onAdd={handleOnAdd} 
+              />
             )
           )
         }

@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { CartProvider } from './components/context/CartContext'; // Asegúrate de esta ruta
-import NavBar from './components/Navbar'; // Nombre del archivo Navbar
+import { CartProvider } from './context/CartContext'; // <<-- ¡¡RUTA CORREGIDA AQUÍ!!
+import NavBar from './components/Navbar';
 import ItemListContainer from './components/ItemListContainer';
 import ItemDetailContainer from './components/ItemDetailContainer';
-import Cart from './components/Cart'; // Nuevo componente
-import Checkout from './components/Checkout'; // Nuevo componente
-import NotFound from './components/NotFound'; // Ya lo tienes
+import Cart from './components/Cart';
+import Checkout from './components/Checkout';
+import NotFound from './components/NotFound';
 import './App.css';
 
 function App() {
