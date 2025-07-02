@@ -1,48 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ItemList from './ItemList';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../firebase/config'; // <<-- RUTA CORREGIDA AQUÍ
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from '../services/firebase.js';
+import Item from './Item';
+// SIN IMPORT DE CSS
 
-const ItemListContainer = ({ greeting }) => {
-  const [products, setProducts] = useState([]); 
+const ItemListContainer = () => {
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const { categoryId } = useParams();
 
   useEffect(() => {
     setLoading(true);
-    const productsRef = collection(db, 'products'); 
+    const collectionRef = categoryId 
+      ? query(collection(db, 'products'), where('category', '==', categoryId))
+      : collection(db, 'products');
 
-    const q = categoryId
-      ? query(productsRef, where('category', '==', categoryId))
-      : productsRef;
-
-    getDocs(q)
-      .then(snapshot => {
-        const productsDB = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setProducts(productsDB);
+    getDocs(collectionRef)
+      .then(response => {
+        const productsAdapted = response.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setItems(productsAdapted);
       })
-      .catch(error => {
-        console.error("Error fetching products:", error);
-        setProducts([]); 
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));
   }, [categoryId]);
 
   return (
-    <div className="item-list-container">
-      <h2>{greeting} {categoryId ? `: ${categoryId.toUpperCase()}` : ''}</h2>
-      {loading ? (
-        <p>Cargando productos...</p>
-      ) : products && products.length > 0 ? (
-        <ItemList products={products} />
-      ) : (
-        <p>No se encontraron productos en esta categoría.</p>
-      )}
+    <div className="ItemListContainer">
+      <h1>{categoryId ? `Categoría: ${categoryId}` : 'Nuestro Catálogo'}</h1>
+      <div className="ItemList">
+        {items.map(item => <Item key={item.id} {...item} />)}
+      </div>
     </div>
   );
 };
-
 export default ItemListContainer;

@@ -1,25 +1,15 @@
+// src/components/ItemList.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './ItemList.css';
+import Item from './Item';
+// No se necesita importar CSS aquí, ya que el contenedor se encarga.
 
-function ItemList({ products }) { // <<-- PROP 'products' CORREGIDA AQUÍ
+const ItemList = ({ items }) => {
+  // El div debe tener exactamente esta clase para que el CSS del contenedor funcione.
   return (
-    <div className="itemList">
-      {products.map((prod) => (
-        <div key={prod.id} className="itemCard">
-          <Link to={`/item/${prod.id}`} className="itemLink">
-            <img
-              src={prod.image} // <<-- CAMPO 'image' CORREGIDO AQUÍ
-              alt={prod.name}
-              className="itemCard__img"
-            />
-            <h3 className="itemCard__title">{prod.name}</h3>
-            <p className="itemCard__price">${prod.price}</p>
-          </Link>
-        </div>
-      ))}
+    <div className="ItemList"> 
+      {items.map(item => <Item key={item.id} {...item} />)}
     </div>
   );
-}
+};
 
 export default ItemList;

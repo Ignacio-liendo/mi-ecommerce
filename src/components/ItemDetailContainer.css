@@ -1,7 +1,0 @@
-.item-detail-container {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 100px); /* Ajusta según la altura de tu NavBar */
-}

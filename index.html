@@ -1,10 +1,62 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>Mi E-commerce</title>
+    <style>
+      /* --- FUENTE Y VARIABLES DE COLOR --- */
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+      :root {
+        --color-primary: #ffffff; --color-secondary: #a1a1aa; --color-accent: #ef4444;
+        --color-accent-hover: #dc2626; --color-background: #18181b; --color-surface: #27272a;
+        --border-color: #3f3f46; --border-radius: 0.5rem;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: 'Inter', sans-serif; background-color: var(--color-background); color: var(--color-primary); }
+      a { text-decoration: none; color: inherit; }
+      .App { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+      main { padding: 2rem 0; }
+
+      /* --- NAVBAR --- */
+      .Navbar { display: flex; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid var(--border-color); }
+      .Navbar h3 { font-size: 1.5rem; font-weight: 700; }
+      .Navbar .Categories { margin: 0 auto; display: flex; gap: 2rem; font-size: 0.9rem; text-transform: uppercase; }
+      .Navbar .Option:hover { color: var(--color-primary); }
+      .Navbar .ActiveOption { color: var(--color-primary); font-weight: 600; }
+
+      /* --- ITEMLIST & CARDS --- */
+      .ItemListContainer h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
+      .ItemList { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+      .CardItem { background-color: var(--color-surface); border: 1px solid var(--border-color); border-radius: var(--border-radius); transition: transform 0.2s ease, border-color 0.2s ease; display: flex; flex-direction: column; overflow: hidden; }
+      .CardItem:hover { transform: translateY(-5px); border-color: var(--color-accent); }
+      .CardItem header { padding: 1rem 1.5rem; text-align: center; }
+      .CardItem h2 { font-size: 1.1rem; font-weight: 500; min-height: 44px; }
+      .CardItem .ItemImg { width: 100%; height: 220px; object-fit: contain; padding: 1rem; background-color: white; }
+      .CardItem section { padding: 1.5rem; flex-grow: 1; text-align: center; }
+      .CardItem .Price { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+      .CardItem .Stock { font-size: 0.8rem; color: var(--color-secondary); margin-bottom: 1.5rem; }
+      .CardItem footer { padding: 0 1.5rem 1.5rem 1.5rem; margin-top: auto; }
+      .CardItem .Option { display: block; width: 100%; text-align: center; background-color: var(--color-accent); color: white; padding: 0.75rem; border-radius: 0.5rem; font-weight: 600; transition: background-color 0.2s ease; }
+      .CardItem .Option:hover { background-color: var(--color-accent-hover); }
+
+      /* --- ITEMDETAIL --- */
+      .ItemDetail { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; padding: 2rem; background-color: var(--color-surface); border-radius: var(--border-radius); max-width: 1000px; margin: 2rem auto; align-items: center; }
+      .ItemDetail .ItemImg { width: 100%; height: auto; max-height: 500px; object-fit: contain; background-color: white; border-radius: var(--border-radius); }
+      .ItemDetail .DetailContent h2 { font-size: 2.5rem; font-weight: 700; }
+      .ItemDetail .DetailContent .Category { color: var(--color-secondary); margin-bottom: 1rem; }
+      .ItemDetail .DetailContent .Description { font-size: 1rem; color: var(--color-secondary); margin-bottom: 2rem; }
+      .ItemDetail .DetailContent .Price { font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; }
+      
+      /* --- ITEMCOUNT --- */
+      .Counter { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; width: 100%; }
+      .Counter .Controls { display: flex; align-items: center; gap: 1rem; }
+      .Counter .Controls button { width: 3rem; height: 3rem; border-radius: var(--border-radius); border: 1px solid var(--border-color); background-color: var(--color-background); color: var(--color-primary); font-size: 1.5rem; cursor: pointer; }
+      .Counter .Controls h4 { font-size: 1.5rem; font-weight: 600; min-width: 40px; text-align: center; }
+      .Counter .AddButton { width: 100%; background-color: var(--color-accent); color: white; border: none; padding: 1rem; border-radius: 0.5rem; font-weight: 600; font-size: 1rem; cursor: pointer; }
+      .Counter .AddButton:disabled { background-color: var(--color-secondary); cursor: not-allowed; }
+    </style>
   </head>
   <body>
     <div id="root"></div>

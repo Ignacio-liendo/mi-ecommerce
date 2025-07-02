@@ -1,24 +1,17 @@
-import React from 'react';
-import { useCart } from '../context/CartContext'; // <<-- CORREGIDO: Ruta ajustada
-import './CartItem.css'; // Crea este archivo CSS
+import React, { useContext } from 'react';
+import { CartContext } from './context/CartContext';
 
-const CartItem = ({ id, name, price, quantity, image }) => {
-  const { removeItem } = useCart();
+const CartItem = ({ id, name, price, quantity, img }) => {
+    const { removeItem } = useContext(CartContext);
 
-  return (
-    <div className="cart-item">
-      <img src={image} alt={name} className="cart-item-image" />
-      <div className="cart-item-details">
-        <h3>{name}</h3>
-        <p>Cantidad: {quantity}</p>
-        <p>Precio unitario: ${price}</p>
-        <p>Subtotal: ${(price * quantity).toFixed(2)}</p>
-      </div>
-      <button onClick={() => removeItem(id)} className="cart-item-remove-button">
-        Remover
-      </button>
-    </div>
-  );
+    return (
+        <div className="CartItem">
+            <img src={img} alt={name} className="ItemImg" />
+            <h4>{name}</h4>
+            <p>Cantidad: {quantity}</p>
+            <p>Subtotal: ${new Intl.NumberFormat('es-AR').format(price * quantity)}</p>
+            <button onClick={() => removeItem(id)} className="RemoveButton">Eliminar</button>
+        </div>
+    );
 };
-
 export default CartItem;

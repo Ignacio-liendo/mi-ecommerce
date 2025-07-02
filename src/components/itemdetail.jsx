@@ -1,47 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { CartContext } from './context/CartContext';
 import ItemCount from './ItemCount';
-import { useCart } from '../context/CartContext'; // <<-- RUTA CORREGIDA AQUÍ
-import './ItemDetail.css';
 
-const ItemDetail = ({ item }) => {
+const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
   const [quantityAdded, setQuantityAdded] = useState(0);
-  const { addItem, isInCart, cart } = useCart(); // Agregado 'cart' para acceder a la cantidad existente
+  const { addItem } = useContext(CartContext);
 
   const handleOnAdd = (quantity) => {
     setQuantityAdded(quantity);
-    addItem(item, quantity);
+    // Pasamos el objeto completo al carrito, incluyendo la imagen
+    addItem({ id, name, price, stock, img }, quantity);
   };
 
   return (
-    <div className="item-detail">
-      <img src={item.image} alt={item.name} className="item-detail-image" />
-      <div className="item-detail-info">
-        <h2>{item.name}</h2>
-        <p className="item-detail-description">{item.description}</p>
-        <p className="item-detail-price">${item.price}</p>
-        {
-          item.stock === 0 ? (
-            <p className="no-stock-message">Sin stock disponible</p>
+    <article className="ItemDetail">
+      <picture>
+        <img src={img} alt={name} className="ItemImg" />
+      </picture>
+      <div className="DetailContent">
+        <p className="Category">{category}</p>
+        <h2>{name}</h2>
+        <p className="Description">{description}</p>
+        <p className="Price">${new Intl.NumberFormat('es-AR').format(price)}</p>
+        <footer>
+          {quantityAdded > 0 ? (
+            <Link to='/cart' className='Option'>Terminar Compra</Link>
           ) : (
-            quantityAdded > 0 ? (
-              <div className="item-added-actions">
-                <Link to="/cart" className="go-to-cart-button">Terminar Compra</Link>
-                <Link to="/" className="keep-shopping-button">Seguir Comprando</Link>
-              </div>
-            ) : (
-              // Inicializa ItemCount con la cantidad actual si el producto ya está en el carrito
-              <ItemCount 
-                stock={item.stock} 
-                initial={isInCart(item.id) ? (cart.find(cartItem => cartItem.id === item.id)?.quantity || 1) : 1} 
-                onAdd={handleOnAdd} 
-              />
-            )
-          )
-        }
+            <ItemCount initial={1} stock={stock} onAdd={handleOnAdd} />
+          )}
+        </footer>
       </div>
-    </div>
+    </article>
   );
 };
-
 export default ItemDetail;
