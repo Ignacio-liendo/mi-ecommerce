@@ -21,8 +21,15 @@
 
       /* --- NAVBAR --- */
       .Navbar { display: flex; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid var(--border-color); }
-      .Navbar h3 { font-size: 1.5rem; font-weight: 700; }
+      
+      /* ESTILOS NUEVOS PARA EL LOGO (AÑADIR ESTO) */
+      .Navbar .Logo {
+        width: 180px; /* Ancho del logo */
+        height: 40px; /* Alto del logo */
+      }
+
       .Navbar .Categories { margin: 0 auto; display: flex; gap: 2rem; font-size: 0.9rem; text-transform: uppercase; }
+      .Navbar .Option { color: var(--color-secondary); }
       .Navbar .Option:hover { color: var(--color-primary); }
       .Navbar .ActiveOption { color: var(--color-primary); font-weight: 600; }
 
