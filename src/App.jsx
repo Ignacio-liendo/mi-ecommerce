@@ -4,7 +4,8 @@ import { CartProvider } from './components/context/CartContext';
 import Navbar from './components/Navbar';
 import ItemListContainer from './components/ItemListContainer';
 import ItemDetailContainer from './components/ItemDetailContainer';
-import Cart from './components/Cart'; // Importamos el componente del carrito
+import Cart from './components/Cart';
+import Checkout from './components/Checkout';
 
 function App() {
   return (
@@ -17,8 +18,8 @@ function App() {
               <Route path="/" element={<ItemListContainer />} />
               <Route path="/category/:categoryId" element={<ItemListContainer />} />
               <Route path="/item/:itemId" element={<ItemDetailContainer />} />
-              <Route path="/cart" element={<Cart />} /> {/* RUTA DEL CARRITO AÑADIDA */}
-              {/* Añade aquí la ruta para Checkout si la tienes */}
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
             </Routes>
           </main>
         </CartProvider>

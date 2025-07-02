@@ -79,3 +79,14 @@ main { padding: 2rem 0; }
 .CartItem .ItemImg { width: 100px; height: 100px; object-fit: contain; background-color: white; border-radius: var(--border-radius); }
 .CartItem h4 { font-weight: 600; }
 .CartItem .RemoveButton { background: none; border: none; color: var(--color-danger); cursor: pointer; font-weight: 500; }
+
+/* --- CHECKOUT --- */
+.Checkout { max-width: 600px; margin: 2rem auto; }
+.Checkout h1 { font-size: 2.5rem; text-align: center; margin-bottom: 2rem; }
+.CheckoutForm { display: flex; flex-direction: column; gap: 1.5rem; background-color: var(--color-surface); padding: 2rem; border-radius: var(--border-radius); }
+.CheckoutForm .Label { display: flex; flex-direction: column; font-weight: 500; color: var(--color-secondary); }
+.CheckoutForm .Input { margin-top: 0.5rem; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 1rem; background-color: var(--color-background); color: var(--color-primary); }
+.CheckoutForm .Input:focus { outline: none; border-color: var(--color-accent); }
+.CheckoutForm .Button { background-color: var(--color-accent); color: white; border: none; padding: 1rem; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease; }
+.CheckoutForm .Button:hover { background-color: var(--color-accent-hover); }
+.InfoMessage { text-align: center; font-size: 1.5rem; padding: 4rem 0; }
